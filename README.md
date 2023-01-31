@@ -1,4 +1,4 @@
-# openapi_client
+# Permit Ruby
 
 OpenapiClient - the Ruby gem for the Permit.io API
 
