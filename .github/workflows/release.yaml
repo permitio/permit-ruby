@@ -2,7 +2,7 @@ name: Build and Publish Permit SDK Gem
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 
 jobs:
