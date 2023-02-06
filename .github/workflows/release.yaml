@@ -20,12 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sed -i "s/<TAG>/${{ env.TAG_NAME }}/g" permit-sdk.gemspec
           gem install bundler
           bundle install
 
       - name: Build gem
         run: |
-          sed -i "s/<TAG>/${{ env.TAG_NAME }}/g" permit-sdk.gemspec
           gem build permit-sdk
 
       - name: Publish gem
