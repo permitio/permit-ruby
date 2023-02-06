@@ -28,7 +28,7 @@ jobs:
 
       - name: Build gem
         run: |
-          gem build permit.gemspec
+          gem build permit
 
       - name: Publish gem
         run: |
