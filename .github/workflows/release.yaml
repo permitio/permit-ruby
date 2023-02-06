@@ -20,16 +20,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sed -i "s/<TAG>/${{ env.TAG_NAME }}/g" permit-sdk.gemspec
+          sed -i "s/<TAG>/${{ github.event.release.name }}/g" permit-sdk.gemspec
           gem install bundler
           bundle install
 
       - name: Build gem
         run: |
-          gem build permit-sdk -o permit-sdk-${{ env.TAG_NAME }}.gem
+          gem build permit-sdk -o permit-sdk-${{ github.event.release.name }}.gem
 
       - name: Publish gem
         run: |
-          gem push permit-sdk-${{ env.TAG_NAME }}.gem
+          gem push permit-sdk-${{ github.event.release.name }}.gem
         env:
           GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
