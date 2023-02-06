@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = "permit-sdk"
-  spec.version     = "<TAG>"
+  spec.version     = "0.0.1"
   spec.authors     = ["Permit.io"]
   spec.email       = ["raz@permit.io"]
   spec.summary     = "Permit.io Server SDK"

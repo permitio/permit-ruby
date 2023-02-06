@@ -9,10 +9,10 @@ class Permit
   DEFAULT_PDP_URL = 'http://localhost:7766'.freeze
   DEFAULT_TENANT = "default"
 
-  def initialize(token, api_url = DEFAULT_API_URL, pdp_url = DEFAULT_PDP_URL, debug = false, logger = Logger.new(STDOUT))
+  def initialize(token, pdp_url = DEFAULT_PDP_URL, api_url = DEFAULT_API_URL, debug = false, logger = Logger.new(STDOUT))
     @config = PermitConfig.new(token, api_url, pdp_url, nil, debug, logger)
     @api = PermitApiClient.new(@config, logger)
-    # @elements = PermitElements.new
+    @elements = @api.elements
     # @enforcement = PermitEnforcer.new
   end
 
@@ -42,6 +42,7 @@ class Permit
     res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
       http.request(req)
     end
+
 
     if res.code != '200'
       raise "Permit SDK got unexpected status code: #{res.code}, please check your Permit SDK class init and PDP container are configured correctly. \nRead more about setting up the PDP at https://docs.permit.io/reference/SDKs/Ruby/quickstart_ruby"
