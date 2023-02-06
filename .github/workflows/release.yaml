@@ -26,7 +26,7 @@ jobs:
 
       - name: Build gem
         run: |
-          gem build permit
+          gem build permit-sdk
 
       - name: Publish gem
         run: |
