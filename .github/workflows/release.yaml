@@ -26,7 +26,7 @@ jobs:
 
       - name: Build gem
         run: |
-          gem build permit-sdk
+          gem build permit-sdk -o permit-sdk-${{ env.TAG_NAME }}.gem
 
       - name: Publish gem
         run: |
