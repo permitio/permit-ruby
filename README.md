@@ -16,86 +16,51 @@ gem install permit-sdk
 
 Put the package under your project folder and add the following in import:
 
-```golang
+```ruby
 require "permit-sdk"
 ```
 
 ## Usage
 
 ### Init the SDK
+
 To init the SDK, you need to create a new Permit client with the API key you got from the Permit.io dashboard.
 
 First we will create a new Config object so we can pass it to the Permit client.
 
 Second, we will create a new Permit client with the Config object we created.
 
-```golang
-package main
-
-import "github.com/permitio/permit-golang/pkg/permit"
-import "github.com/permitio/permit-golang/pkg/config"
-
-func main() {
-	PermitConfig := config.NewConfigBuilder("<YOUR_API_TOKEN>").Build()
-	Permit := permit.New(PermitConfig)
-}
+```ruby
+require "permit-sdk"
+permit = Permit.new('token')
 ```
 
 ### Check for permissions
-To check permissions using our `Permit.Check()` method, you will have to create a new User and Resource models using the `enforcement` models
-The models are located in `github.com/permitio/permit-golang/pkg/enforcement`
 
+To check permissions using our `Permit.check()` method.
 Follow the example below:
 
-```golang
-package main
+```ruby
+require 'permit-sdk'
 
-import "github.com/permitio/permit-golang/pkg/permit"
-import "github.com/permitio/permit-golang/pkg/config"
-import "github.com/permitio/permit-golang/pkg/enforcement"
-
-func main() {
-	permitConfig := config.NewConfigBuilder("<YOUR_API_TOKEN>").Build()
-	Permit := permit.New(permitConfig)
-
-	user := enforcement.UserBuilder("user_id").Build()
-	resource := enforcement.ResourceBuilder("resource_id").Build()
-	permitted, err := Permit.Check(user, "read", resource)
-	if err != nil {
-		return
-	}
-	if permitted {
-		// Let the user read the resource
-	} else {
-		// Deny access
-	}
-}
+permit = Permit.new("TOKEN")
+user = { id: "user@mail.io", first_name: "User", last_name: "Doe", email: "user@mail.io" }
+permitted = permit.check(user.id, "create", "Blog_Post")
+if permitted
+  # permit user to create blog post
+else
+  # deny user to create blog post
+end
 ```
 
 ### Sync users
-To sync users to the Permit.io API, using the `Permit.SyncUsers()` method,
-you will have to create a User model using our main Models package.
-The models are located in `github.com/permitio/permit-golang/pkg/models`
 
+To sync users to the Permit.io API, using the `Permit.sync_user()` method.
 Follow the example below:
-```golang
-package main
 
-import (
-	"additionalContext"
-	"fmt"
-	"github.com/permitio/permit-golang/pkg/config"
-	"github.com/permitio/permit-golang/pkg/models"
-	"github.com/permitio/permit-golang/pkg/permit"
-)
+```ruby
+require 'permit-sdk'
 
-func main() {
-	ctx := additionalContext.Background()
-	PermitConfig := config.NewConfigBuilder("<YOUR_API_TOKEN>").Build()
-	Permit := permit.New(PermitConfig)
-
-	newUser := models.NewUserCreate("new_user")
-	user, _ := Permit.SyncUser(ctx, *newUser)
-	fmt.Println(user.Key)
-}
+permit = Permit.new("TOKEN")
+user = permit.sync_user({ key: "new_user_key", email: "user@mail.com", first_name: "User", last_name: "Doe" })
 ```
