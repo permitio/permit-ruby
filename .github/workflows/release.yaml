@@ -1,0 +1,37 @@
+name: Build and Publish Permit SDK Gem
+
+on:
+  push:
+#    branches:
+#      - main
+
+env:
+  RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v2
+        with:
+          ruby-version: 2.7
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build gem
+        run: |
+          gem build permit.gemspec
+
+      - name: Publish gem
+        run: |
+          gem push permit-0.0.1.gem
+        env:
+          RUBYGEMS_API_KEY: ${{ env.RUBYGEMS_API_KEY }}
