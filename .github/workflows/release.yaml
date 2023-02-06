@@ -30,6 +30,6 @@ jobs:
 
       - name: Publish gem
         run: |
-          gem push permit-0.0.1.gem
+          gem push permit-sdk-0.0.1.gem
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
