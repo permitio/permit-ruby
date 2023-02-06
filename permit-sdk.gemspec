@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.email       = ["raz@permit.io"]
   spec.summary     = "Permit.io Server SDK"
   spec.homepage    = "https://permit.io"
-  spec.license     = "MIT"
+  spec.license     = "Apache-2.0"
 
   spec.files = Dir["lib/**/*"]
 
