@@ -1,3 +1,4 @@
+![Ruby.png](imgs/Ruby.png)
 # Permit.io Ruby SDK
 
 Instructions for installing Ruby SDK for interacting with Permit.io.
