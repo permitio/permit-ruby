@@ -1,0 +1,35 @@
+name: Build and Publish Permit SDK Gem
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Install dependencies
+        run: |
+          sed -i "s/<TAG>/${{ github.event.release.tag_name }}/g" permit-sdk.gemspec
+          gem install bundler
+          bundle install
+
+      - name: Build gem
+        run: |
+          gem build permit-sdk -o permit-sdk-${{ github.event.release.tag_name }}.gem
+
+      - name: Publish gem
+        run: |
+          gem push permit-sdk-${{ github.event.release.tag_name }}.gem
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
